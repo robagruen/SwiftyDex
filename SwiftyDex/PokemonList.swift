@@ -7,75 +7,79 @@
 //
 
 import UIKit
+import SQLite3
 
 class PokemonList: UITableViewController {
+    
+    var pokemonList = [Pokemon]()
+    var db: OpaquePointer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "SwiftyDex"
+        
+        if let sqliteDBPath = Bundle.main.path(forResource: "pokedex", ofType: "sqlite", inDirectory: "") {
+            // print(sqliteDBPath)
+            guard sqlite3_open(sqliteDBPath, &db) == SQLITE_OK else {
+                print("error opening database")
+                sqlite3_close(db)
+                db = nil
+                return
+            }
+        }
+        readValues()
+    }
+    
+    func readValues(){
+        pokemonList.removeAll()
+        let query = "SELECT * FROM Pokemon"
+        var statementPointer: OpaquePointer?
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        //preparing the query
+        if (sqlite3_prepare(db, query, -1, &statementPointer, nil) != SQLITE_OK) {
+            let error = String(cString: sqlite3_errmsg(db)!)
+            print("Error preparing query: \(error)")
+            return
+        }
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        //traversing through all the records
+        while (sqlite3_step(statementPointer) == SQLITE_ROW) {
+            let id: Int = Int(sqlite3_column_int(statementPointer, 0))
+            let identifier: String = String(cString: sqlite3_column_text(statementPointer, 1))
+            let speciesID: Int = Int(sqlite3_column_int(statementPointer, 2))
+            let height: Int = Int(sqlite3_column_int(statementPointer, 3))
+            let weight: Int = Int(sqlite3_column_int(statementPointer, 4))
+            let baseExperience: Int = Int(sqlite3_column_int(statementPointer, 5))
+            let order: Int = Int(sqlite3_column_int(statementPointer, 6))
+            let isDefault: Int = Int(sqlite3_column_int(statementPointer, 7))
+            
+            //adding values to list
+            pokemonList.append(Pokemon(id: id, identifier: identifier, speciesID: speciesID, height: height, weight: weight, baseExperience: baseExperience, order: order, isDefault: isDefault))
+        }
     }
 
+    
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return pokemonList.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
+        let cell = UITableViewCell()
+        //let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
+        cell.textLabel?.text = pokemonList[indexPath.row].identifier
 
         return cell
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    
+    // MARK: - Table view delegate
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     /*
     // MARK: - Navigation
