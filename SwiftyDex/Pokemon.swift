@@ -17,6 +17,8 @@ struct Pokemon {
     let baseExperience: Int
     let order: Int
     let isDefault: Int
+    var type1: String?
+    var type2: String?
     
     init(id: Int, identifier: String, speciesID: Int, height: Int, weight: Int, baseExperience: Int, order: Int, isDefault: Int) {
         self.id = id
