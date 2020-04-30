@@ -27,6 +27,8 @@ class PokemonCell: UITableViewCell {
         setNameLabelConstraints()
         setType1LabelConstraints()
         setType2LabelConstraints()
+        
+        print(type2)
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -48,9 +50,9 @@ class PokemonCell: UITableViewCell {
     func setSpriteImageConstraints() {
         sprite.translatesAutoresizingMaskIntoConstraints = false
         sprite.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        sprite.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12).isActive = true
-        sprite.heightAnchor.constraint(equalToConstant: 45).isActive = true
-        sprite.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        sprite.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25).isActive = true
+        sprite.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        sprite.widthAnchor.constraint(equalToConstant: 35).isActive = true
     }
     
     func setNameLabelConstraints() {
@@ -73,7 +75,7 @@ class PokemonCell: UITableViewCell {
     func setType2LabelConstraints() {
         type2.translatesAutoresizingMaskIntoConstraints = false
         //type2.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        type2.leadingAnchor.constraint(equalTo: type1.trailingAnchor, constant: 20).isActive = true
+        type2.leadingAnchor.constraint(equalTo: sprite.trailingAnchor, constant: 100).isActive = true
         type2.heightAnchor.constraint(equalToConstant: 80).isActive = true
         type2.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12).isActive = true
         type2.topAnchor.constraint(equalTo: topAnchor).isActive = true
@@ -82,47 +84,47 @@ class PokemonCell: UITableViewCell {
     func setTypeLabelColor(label: UILabel) {
         switch label.text {
             case "Normal":
-                label.textColor = UIColor.white
+                label.textColor = UIColor(hexValue: "a8a878")
             case "Fighting":
-                label.textColor = UIColor.red
+                label.textColor = UIColor(hexValue: "c03028")
             case "Flying":
-                label.textColor = UIColor.purple
+                label.textColor = UIColor(hexValue: "a890f0")
             case "Poison":
-                label.textColor = UIColor.purple
+                label.textColor = UIColor(hexValue: "a040a0")
             case "Ground":
-                label.textColor = UIColor.brown
+                label.textColor = UIColor(hexValue: "e0c068")
             case "Rock":
-                label.textColor = UIColor.brown
+                label.textColor = UIColor(hexValue: "b8a038")
             case "Bug":
-                label.textColor = UIColor.yellow
+                label.textColor = UIColor(hexValue: "a8b820")
             case "Ghost":
-                label.textColor = UIColor.purple
+                label.textColor = UIColor(hexValue: "705898")
             case "Steel":
-                label.textColor = UIColor.white
+                label.textColor = UIColor(hexValue: "b8b8d0")
             case "Fire":
-                label.textColor = UIColor.orange
+                label.textColor = UIColor(hexValue: "f08030")
             case "Water":
-                label.textColor = UIColor.blue
+                label.textColor = UIColor(hexValue: "6890f0")
             case "Grass":
-                label.textColor = UIColor.green
+                label.textColor = UIColor(hexValue: "78C850")
             case "Electric":
-                label.textColor = UIColor.yellow
+                label.textColor = UIColor(hexValue: "f8d030")
             case "Psychic":
-                label.textColor = UIColor.systemPink
+                label.textColor = UIColor(hexValue: "f85888")
             case "Ice":
-                label.textColor = UIColor.green
+                label.textColor = UIColor(hexValue: "98d8d8")
             case "Dragon":
-                label.textColor = UIColor.purple
+                label.textColor = UIColor(hexValue: "7038f8")
             case "Dark":
-                label.textColor = UIColor.purple
+                label.textColor = UIColor(hexValue: "705848")
             case "Fairy":
-                label.textColor = UIColor.systemPink
+                label.textColor = UIColor(hexValue: "ee99ac")
             case "???":
-                label.textColor = UIColor.white
+                label.textColor = UIColor(hexValue: "68a090")
             case "Shadow":
-                label.textColor = UIColor.white
+                label.textColor = UIColor(hexValue: "705848")
             default:
-                label.textColor = UIColor.white
+                label.textColor = UIColor(hexValue: "a8a878")
         }
     }
 

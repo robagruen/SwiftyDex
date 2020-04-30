@@ -45,6 +45,19 @@ class PokemonList: UIViewController {
         let query = """
             SELECT DISTINCT p.id, p.identifier, p.species_id, p.height, p.weight, p.base_experience,  p.is_default
             FROM pokemon p
+            WHERE p.id != 10080
+            AND p.id != 10081
+            AND p.id != 10082
+            AND p.id != 10083
+            AND p.id != 10084
+            AND p.id != 10085
+            AND p.id != 10094
+            AND p.id != 10095
+            AND p.id != 10096
+            AND p.id != 10097
+            AND p.id != 10098
+            AND p.id != 10099
+            AND p.id != 10148
             ORDER BY p.species_id
         """
         var statementPointer: OpaquePointer?
@@ -132,15 +145,12 @@ class PokemonList: UIViewController {
     
 
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+//     MARK: - Navigation
+//
+//     In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
     }
-    */
 
 }
 
@@ -160,9 +170,6 @@ extension PokemonList: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        
-        print(pokemonList[indexPath.row].identifier)
     }
     
 }
