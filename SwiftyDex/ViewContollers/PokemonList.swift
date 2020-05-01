@@ -92,8 +92,10 @@ class PokemonList: UIViewController {
                 }
             }
             
+            let pokemonWithSetName = setPokemonName(pokemon: newPokemon)
+            
             // Creating a new Pokemon object with returned data
-            pokemonList.append(newPokemon)
+            pokemonList.append(pokemonWithSetName)
         }
     }
     
@@ -140,8 +142,56 @@ class PokemonList: UIViewController {
         tableView.dataSource = self
     }
 
-    
-
+    func setPokemonName(pokemon: Pokemon) -> Pokemon {
+        var modifiedPokemon: Pokemon = pokemon
+        switch modifiedPokemon.identifier {
+            case let str where str.contains("-alola"):
+                modifiedPokemon.form = "Alola"
+                modifiedPokemon.name = modifiedPokemon.identifier.replacingOccurrences(of: "-alola", with: "").capitalized
+            case let str where str.contains("-mega-x"):
+                modifiedPokemon.form = "Mega X"
+                modifiedPokemon.name = modifiedPokemon.identifier.replacingOccurrences(of: "-mega-x", with: "").capitalized
+            case let str where str.contains("-mega-y"):
+                modifiedPokemon.form = "Mega Y"
+                modifiedPokemon.name = modifiedPokemon.identifier.replacingOccurrences(of: "-mega-y", with: "").capitalized
+            case let str where str.contains("-mega"):
+                modifiedPokemon.form = "Mega"
+                modifiedPokemon.name = modifiedPokemon.identifier.replacingOccurrences(of: "-mega", with: "").capitalized
+            case let str where str.contains("-f"):
+                modifiedPokemon.form = "♀"
+                modifiedPokemon.name = modifiedPokemon.identifier.replacingOccurrences(of: "-f", with: "").capitalized
+            case let str where str.contains("-m"):
+                modifiedPokemon.form = "♂"
+                modifiedPokemon.name = modifiedPokemon.identifier.replacingOccurrences(of: "-m", with: "").capitalized
+            case let str where str.contains("-primal"):
+                modifiedPokemon.form = "Primal"
+                modifiedPokemon.name = modifiedPokemon.identifier.replacingOccurrences(of: "-primal", with: "").capitalized
+            case let str where str.contains("-normal"):
+                modifiedPokemon.form = "Normal"
+                modifiedPokemon.name = modifiedPokemon.identifier.replacingOccurrences(of: "-normal", with: "").capitalized
+            case let str where str.contains("-attack"):
+                modifiedPokemon.form = "Attack"
+                modifiedPokemon.name = modifiedPokemon.identifier.replacingOccurrences(of: "-attack", with: "").capitalized
+            case let str where str.contains("-defense"):
+                modifiedPokemon.form = "Defense"
+                modifiedPokemon.name = modifiedPokemon.identifier.replacingOccurrences(of: "-defense", with: "").capitalized
+            case let str where str.contains("-speed"):
+                modifiedPokemon.form = "Speed"
+                modifiedPokemon.name = modifiedPokemon.identifier.replacingOccurrences(of: "-speed", with: "").capitalized
+            case let str where str.contains("-plant"):
+                modifiedPokemon.form = "Plant"
+                modifiedPokemon.name = modifiedPokemon.identifier.replacingOccurrences(of: "-plant", with: "").capitalized
+            case let str where str.contains("-sandy"):
+                modifiedPokemon.form = "Sandy"
+                modifiedPokemon.name = modifiedPokemon.identifier.replacingOccurrences(of: "-sandy", with: "").capitalized
+            case let str where str.contains("-trash"):
+                modifiedPokemon.form = "Trash"
+                modifiedPokemon.name = modifiedPokemon.identifier.replacingOccurrences(of: "-trash", with: "").capitalized
+            default:
+                modifiedPokemon.name = modifiedPokemon.identifier.capitalized
+        }
+        return modifiedPokemon
+    }
     
 
 

@@ -11,6 +11,7 @@ import Foundation
 struct Pokemon {
     let id: Int
     let identifier: String
+    var name: String?
     let speciesID: Int
     let height: Int
     let weight: Int
@@ -19,6 +20,8 @@ struct Pokemon {
     let isDefault: Int
     var type1: String?
     var type2: String?
+    var form: String?
+    var isFavorite: Bool
     
     init(id: Int, identifier: String, speciesID: Int, height: Int, weight: Int, baseExperience: Int, order: Int, isDefault: Int) {
         self.id = id
@@ -29,5 +32,6 @@ struct Pokemon {
         self.baseExperience = baseExperience
         self.order = order
         self.isDefault = isDefault
+        self.isFavorite = false
     }
 }

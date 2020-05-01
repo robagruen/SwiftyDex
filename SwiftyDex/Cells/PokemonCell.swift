@@ -14,6 +14,7 @@ class PokemonCell: UITableViewCell {
     var type1: UILabel = UILabel()
     var type2: UILabel = UILabel()
     var sprite: UIImageView = UIImageView()
+    var form: UILabel = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -22,13 +23,13 @@ class PokemonCell: UITableViewCell {
         addSubview(type1)
         addSubview(type2)
         addSubview(sprite)
+        addSubview(form)
         
         setSpriteImageConstraints()
         setNameLabelConstraints()
         setType1LabelConstraints()
         setType2LabelConstraints()
-        
-        print(type2)
+        setFormLabelConstraints()
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -36,7 +37,7 @@ class PokemonCell: UITableViewCell {
     }
     
     func set(pokemon: Pokemon) {
-        name.text = pokemon.identifier.capitalized
+        name.text = pokemon.name
         let spriteName: String = String(pokemon.id) + "-sprite"
         sprite.image = UIImage(named: spriteName)
         type1.text = pokemon.type1
@@ -44,6 +45,14 @@ class PokemonCell: UITableViewCell {
         if let secondType = pokemon.type2 {
             type2.text = secondType
             setTypeLabelColor(label: type2)
+        } else {
+            // Clearing type 2 label if reusable cell previously had text in it
+            type2.text = ""
+        }
+        if let pokemonForm = pokemon.form {
+            form.text = pokemonForm
+        } else {
+            form.text = ""
         }
     }
     
@@ -57,28 +66,35 @@ class PokemonCell: UITableViewCell {
     
     func setNameLabelConstraints() {
         name.translatesAutoresizingMaskIntoConstraints = false
-        //name.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         name.leadingAnchor.constraint(equalTo: sprite.trailingAnchor, constant: 20).isActive = true
         name.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        name.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12).isActive = true
+        //name.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12).isActive = true
     }
     
     func setType1LabelConstraints() {
         type1.translatesAutoresizingMaskIntoConstraints = false
-        //type1.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         type1.leadingAnchor.constraint(equalTo: sprite.trailingAnchor, constant: 20).isActive = true
         type1.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        type1.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12).isActive = true
+        //type1.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12).isActive = true
         type1.topAnchor.constraint(equalTo: topAnchor).isActive = true
     }
     
     func setType2LabelConstraints() {
         type2.translatesAutoresizingMaskIntoConstraints = false
-        //type2.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        type2.leadingAnchor.constraint(equalTo: sprite.trailingAnchor, constant: 100).isActive = true
+        //type2.leadingAnchor.constraint(equalTo: sprite.trailingAnchor, constant: 100).isActive = true
+        type2.leadingAnchor.constraint(equalTo: type1.trailingAnchor, constant: 20).isActive = true
         type2.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        type2.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12).isActive = true
+        //type2.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12).isActive = true
         type2.topAnchor.constraint(equalTo: topAnchor).isActive = true
+    }
+    
+    func setFormLabelConstraints() {
+        form.translatesAutoresizingMaskIntoConstraints = false
+        form.leadingAnchor.constraint(equalTo: name.trailingAnchor, constant: 10).isActive = true
+        form.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        //form.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12).isActive = true
+        form.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        
     }
     
     func setTypeLabelColor(label: UILabel) {
